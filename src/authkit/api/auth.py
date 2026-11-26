@@ -19,7 +19,7 @@ from authkit.api.schemas import (
     TokenIn,
     TokenOut,
 )
-from authkit.errors import invalid_token
+from authkit.errors import ApiError, invalid_token
 from authkit.http import Ctx, CurrentAuth, Db, ReqInfo
 from authkit.services import accounts, sessions
 from authkit.services.sessions import IssuedTokens
@@ -145,9 +145,9 @@ def logout(
     if header.lower().startswith("bearer "):
         try:
             _, session = sessions.authenticate(ctx, db, header[7:].strip())
-        except Exception:  # noqa: S110  (an invalid token just means there is nothing to revoke)
-            pass
-        else:
+        except ApiError:
+            session = None  # an invalid token just means there is nothing to revoke by it
+        if session is not None:
             accounts.logout(ctx, db, session, req)
             return out
     raw = (body.refresh_token if body else None) or (

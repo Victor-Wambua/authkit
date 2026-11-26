@@ -72,7 +72,7 @@ def from_b32(text: str) -> bytes:
 
 def provisioning_uri(secret: bytes, account: str, issuer: str) -> str:
     """The otpauth:// URI that authenticator apps read from a QR code."""
-    label = quote(f"{issuer}:{account}", safe="")
+    label = f"{quote(issuer, safe='')}:{quote(account, safe='')}"
     query = urlencode(
         {"secret": b32(secret), "issuer": issuer, "algorithm": "SHA1", "digits": 6, "period": 30},
         quote_via=quote,

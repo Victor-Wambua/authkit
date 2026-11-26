@@ -81,7 +81,11 @@ def _is_repetitive(pw: str) -> bool:
     """Rejects 'aaaaaaaaaaaa', '123456789012', 'abababababab' and similar."""
     if len(set(pw)) == 1:
         return True
-    steps = {ord(b) - ord(a) for a, b in itertools.pairwise(pw)}
-    if steps in ({1}, {-1}):
+    modulus = 10 if pw.isdigit() else 0  # digit runs wrap: 7890123
+    steps = {
+        (ord(b) - ord(a)) % modulus if modulus else ord(b) - ord(a)
+        for a, b in itertools.pairwise(pw)
+    }
+    if steps in ({1}, {-1}, {9}):
         return True
     return any(len(pw) % unit == 0 and pw == pw[:unit] * (len(pw) // unit) for unit in range(2, 5))

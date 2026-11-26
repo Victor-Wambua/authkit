@@ -13,6 +13,7 @@ from sqlalchemy import select
 from authkit.app import build_context
 from authkit.config import ConfigError, Settings
 from authkit.db import create_schema, make_engine
+from authkit.errors import ApiError
 from authkit.models import User
 from authkit.security import keys
 from authkit.security.breach import build_sorted_hash_file
@@ -164,6 +165,10 @@ def main(argv: list[str] | None = None) -> int:
         args.func(args)
     except ConfigError as exc:
         print(f"error: {exc}", file=sys.stderr)
+        return 1
+    except ApiError as exc:
+        reasons = ", ".join(exc.extra.get("reasons", []))
+        print(f"error: {exc.message} {reasons}".strip(), file=sys.stderr)
         return 1
     return 0
 

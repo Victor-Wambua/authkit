@@ -41,8 +41,11 @@ packages = ["src/authkit"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
-filterwarnings = ["error::DeprecationWarning:authkit.*"]
+addopts = "-ra"
+filterwarnings = [
+    "error::DeprecationWarning:authkit.*",
+    "ignore:Using .httpx. with .starlette.testclient.:Warning",
+]
 
 [tool.coverage.run]
 source = ["authkit"]
@@ -76,6 +79,9 @@ plugins = ["pydantic.mypy"]
 
 [tool.bandit]
 exclude_dirs = ["tests", ".venv"]
+# B105 flags string constants such as the audit event name "password_changed" and the
+# token type "Bearer". Ruff's S105 runs on the same code with those files exempted.
+skips = ["B105"]
 
 [[tool.mypy.overrides]]
 module = ["swagger_ui_bundle"]
