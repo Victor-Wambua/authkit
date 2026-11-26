@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Install dependencies
+        run: uv sync --python 3.12
+      - name: Lint (ruff)
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+      - name: Type check (mypy)
+        run: uv run mypy
+      - name: Tests with coverage (fails under 90%)
+        run: uv run pytest --cov --cov-report=term-missing --cov-report=xml --cov-fail-under=90
+      - name: Static security scan (bandit)
+        run: uv run bandit -q -r src -c pyproject.toml
+      - name: Dependency audit (pip-audit)
+        # Advisories in third-party packages are reported, not fatal: they are not fixable in this repo.
+        continue-on-error: true
+        run: uv run pip-audit

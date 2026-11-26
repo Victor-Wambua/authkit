@@ -1,6 +1,6 @@
 .PHONY: install dev seed test cov lint type security audit check openapi
 
-PORT ?= 4120
+PORT ?= 8000
 
 install:
 	uv sync
