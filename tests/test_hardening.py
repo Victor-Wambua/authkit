@@ -237,8 +237,10 @@ def test_health_and_jwks(h: Harness) -> None:
 def test_the_ui_is_served_and_has_no_external_references(h: Harness) -> None:
     page = h.client.get("/")
     assert page.status_code == 200 and "text/html" in page.headers["content-type"]
-    for path in ("/static/app.css", "/static/app.js"):
-        body = h.client.get(path).text
+    for path in ("/static/app.css", "/static/js/app.js", "/static/js/api.js", "/static/js/dom.js"):
+        response = h.client.get(path)
+        assert response.status_code == 200, path
+        body = response.text
         assert "http://" not in body.replace("http://www.w3.org", "") and "https://" not in body, (
             path
         )

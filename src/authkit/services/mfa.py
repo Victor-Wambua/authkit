@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 import re
 import secrets
 
@@ -33,9 +34,21 @@ def normalize_recovery(code: str) -> str:
 
 def qr_svg(uri: str) -> str:
     """Server-side QR as an inline SVG string. Nothing is sent to a third party."""
-    out: str = segno.make(uri, error="m").svg_inline(
-        scale=5, border=2, dark="#111111", light="#ffffff", omitsize=False, svgclass="qr"
+    buffer = io.BytesIO()
+    segno.make(uri, error="m").save(
+        buffer,
+        kind="svg",
+        scale=1,
+        border=2,
+        dark="#111111",
+        light="#ffffff",
+        omitsize=True,  # viewBox only, so CSS decides the rendered size
+        xmldecl=False,
+        svgns=True,
+        nl=False,
+        svgclass="qr",
     )
+    out = buffer.getvalue().decode()
     return out
 
 

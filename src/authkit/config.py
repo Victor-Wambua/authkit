@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     env: Literal["dev", "test", "production"] = "production"
     database_url: str = "sqlite:///./data/authkit.db"
     keys_file: Path = Path("./data/keys.json")
-    base_url: str = "http://localhost:4120"
+    base_url: str = "http://localhost:8000"
     registration_open: bool = True
     require_verified_email: bool = False
     totp_issuer: str = "Authkit"
