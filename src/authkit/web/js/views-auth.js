@@ -45,7 +45,7 @@ function heading(title, text) {
 function demoBox(emailField, pwField) {
   if (!env.dev) return null;
   return h('div.card.flat', {},
-    h('div', {}, h('h3', {}, 'Demo mode'), h('p.desc', {}, 'Seeded with synthetic accounts. Run make seed once, then use these.')),
+    h('div', {}, h('h3', {}, 'Demo mode'), h('p.desc', {}, window.__AUTHKIT_DEMO__ ? 'Seeded with synthetic accounts. Use these to look around.' : 'Seeded with synthetic accounts. Run make seed once, then use these.')),
     h('div.form-row', {}, ...DEMO.map((d) => h('button.btn.btn-secondary.btn-sm', {
       type: 'button',
       onclick: () => { emailField.value = d.email; pwField.value = d.password; pwField.input.focus(); },

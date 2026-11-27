@@ -30,3 +30,19 @@ jobs:
         # Advisories in third-party packages are reported, not fatal: they are not fixable in this repo.
         continue-on-error: true
         run: uv run pip-audit
+
+  demo:
+    name: Static demo (build and browser smoke test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: python3 demo/build.py
+      - run: npm install --no-audit --no-fund
+        working-directory: demo
+      - run: npx playwright install --with-deps chromium
+        working-directory: demo
+      - run: npm test
+        working-directory: demo

@@ -1,5 +1,7 @@
 # Authkit
 
+**Live demo: <https://victor-wambua.github.io/authkit/>** (runs the real service in your browser, no server)
+
 **A small, self-hostable authentication service, done properly.** Argon2id passwords, rotating refresh tokens that detect theft, TOTP two-factor and an audit log.
 
 [![CI](https://github.com/Victor-Wambua/authkit/actions/workflows/ci.yml/badge.svg)](https://github.com/Victor-Wambua/authkit/actions/workflows/ci.yml)
@@ -11,6 +13,20 @@
 > **Status:** portfolio build. Runs locally with synthetic sample data. Not audited, not deployed anywhere, not a replacement for a managed identity provider. See [limitations](#status-and-roadmap).
 
 ![Authkit sign-in screen](docs/screenshots/signin.png)
+
+## Live demo
+
+[victor-wambua.github.io/authkit](https://victor-wambua.github.io/authkit/) runs this service **in your browser**: the unmodified `authkit` package (FastAPI, SQLAlchemy, Argon2id, JWT, TOTP) on [Pyodide](https://pyodide.org/), self-hosted from [`demo/`](demo/). Nothing is sent anywhere and state lives in the tab.
+
+- **Real:** the routes, services and security code, Argon2id at the production cost, Ed25519 access tokens, single-use refresh tokens, reuse detection, TOTP, lockout and the audit log.
+- **Replaced:** the HTTP server (`fetch` calls the ASGI app directly), the database file (in-memory SQLite, no threads, so requests run one at a time) and the clock (you can move it forward). It runs on Python 3.14 with Pyodide's library builds, not the 3.12 and `uv.lock` versions CI uses.
+- **Try:** register and sign in, rotate a refresh token, replay an old one and watch the session die, turn on two-factor, trigger a lockout. The audit log updates after each step. The **Web app** tab is this repository's own UI.
+
+| | |
+|---|---|
+| ![Demo start](docs/screenshots/demo-start.png) | ![Token reuse detected](docs/screenshots/demo-token-reuse.png) |
+
+Build and test it locally: `python3 demo/build.py`, then `cd demo && npm install && npx playwright install chromium && npm test`. Vendored runtime and wheels (about 20 MB, hashes in `demo/vendor/manifest.json`, licences in the page's third-party notices) are refreshed with `demo/tools/fetch_vendor.py`.
 
 ## The problem
 

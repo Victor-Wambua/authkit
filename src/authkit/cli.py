@@ -12,6 +12,7 @@ from sqlalchemy import select
 
 from authkit.app import build_context
 from authkit.config import ConfigError, Settings
+from authkit.context import AppContext
 from authkit.db import create_schema, make_engine
 from authkit.errors import ApiError
 from authkit.models import User
@@ -74,11 +75,8 @@ def cmd_create_admin(args: argparse.Namespace) -> None:
     print(f"created admin {email}")
 
 
-def cmd_seed_demo(_: argparse.Namespace) -> None:
-    settings = Settings()
-    if settings.env == "production":
-        raise ConfigError("seed-demo refuses to run with AUTHKIT_ENV=production")
-    ctx = _open(settings)
+def seed_demo(ctx: AppContext) -> None:
+    """Create the synthetic demo accounts (and, for the user, two devices and failed logins)."""
     now = ctx.clock.now()
     with ctx.sessions() as db:
         for email, role, password in DEMO_USERS:
@@ -114,6 +112,13 @@ def cmd_seed_demo(_: argparse.Namespace) -> None:
                 for _i in range(3):
                     audit.record(ctx, db, audit.LOGIN_FAILURE, bad, user_id=user.id, email=email)
         db.commit()
+
+
+def cmd_seed_demo(_: argparse.Namespace) -> None:
+    settings = Settings()
+    if settings.env == "production":
+        raise ConfigError("seed-demo refuses to run with AUTHKIT_ENV=production")
+    seed_demo(_open(settings))
     print("demo accounts (synthetic, local use only):")
     for email, role, password in DEMO_USERS:
         print(f"  {role:5} {email}  /  {password}")

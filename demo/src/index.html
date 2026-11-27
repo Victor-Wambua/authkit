@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#14213d">
+  <title>Authkit demo: walkthrough</title>
+  <meta name="description" content="The real Authkit authentication service, running in your browser: Argon2id passwords, rotating refresh tokens with reuse detection, TOTP two-factor, lockout and an audit log.">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./demo.css">
+  <script src="./js/theme-init.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="top">
+    <p class="banner" id="banner">
+      <strong>Static demo.</strong>
+      Runs in your browser on invented data; nothing is sent anywhere. The real project is a
+      self-hosted authentication service (Python, FastAPI):
+      <a href="https://github.com/Victor-Wambua/authkit">repository</a> and
+      <a href="https://github.com/Victor-Wambua/authkit#readme">README</a>.
+    </p>
+    <div class="bar">
+      <a class="brand" href="./" aria-label="Authkit demo, start of page">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#14213D"/><circle cx="16" cy="12.5" r="5.5" fill="none" stroke="#FCA311" stroke-width="2.6"/><path d="M16 18v9M16 22.5h4M16 26h3" fill="none" stroke="#FCA311" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <span>Authkit</span>
+      </a>
+      <div class="controls" role="group" aria-label="Demo controls">
+        <p class="clock" id="clock">Server clock <time id="clock-time">starting</time><span id="clock-offset" class="muted"></span></p>
+        <button type="button" class="btn btn-sm" id="adv-15" disabled>Move clock +15 min</button>
+        <button type="button" class="btn btn-sm" id="adv-day" disabled>+1 day</button>
+        <button type="button" class="btn btn-sm" id="reset" disabled>Reset demo</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="intro">
+      <h1>Authkit, running in your browser</h1>
+      <p class="deck">A small authentication service: Argon2id passwords, refresh tokens that detect theft, two-factor codes, lockout and an audit log. This page runs the service's own Python code and lets you break it on purpose.</p>
+    </div>
+
+    <div id="loading" class="loading" role="status" aria-live="polite">
+      <p id="loading-text">Starting the service in your browser.</p>
+      <ol class="stages" id="stages">
+        <li data-stage="runtime">Python runtime (about 10 MB)</li>
+        <li data-stage="packages">FastAPI, SQLAlchemy, cryptography, Argon2 (about 9 MB)</li>
+        <li data-stage="service">Generate signing keys, create the database, seed two accounts</li>
+      </ol>
+      <p class="muted">The first visit downloads about 21 MB. Later visits use the browser cache and work offline.</p>
+    </div>
+    <p id="failed" class="failed" role="alert" hidden></p>
+
+    <div class="grid" id="grid" hidden>
+      <div class="primary">
+        <div class="tabs" role="tablist" aria-label="Views">
+          <button type="button" role="tab" id="tab-walkthrough" aria-controls="panel-walkthrough" aria-selected="true">Walkthrough</button>
+          <button type="button" role="tab" id="tab-app" aria-controls="panel-app" aria-selected="false" tabindex="-1">Web app</button>
+        </div>
+
+        <section id="panel-walkthrough" role="tabpanel" aria-labelledby="tab-walkthrough" tabindex="0">
+          <h2 class="sr-only">Walkthrough</h2>
+          <div id="lab"></div>
+        </section>
+
+        <section id="panel-app" role="tabpanel" aria-labelledby="tab-app" tabindex="0" hidden>
+          <h2 class="sr-only">Web app</h2>
+          <p class="note">This is the web interface that ships in the repository, unchanged, talking to the same in-page service. Sign in as the seeded user or admin (the sign-in screen has fill buttons), or create your own account. Seeded accounts, all invented:</p>
+          <table class="accounts">
+            <caption class="sr-only">Seeded accounts</caption>
+            <thead><tr><th scope="col">Role</th><th scope="col">Email</th><th scope="col">Passphrase</th></tr></thead>
+            <tbody id="seed-accounts"></tbody>
+          </table>
+          <iframe id="app-frame" title="Authkit web app, the repository's own demo interface" class="frame"></iframe>
+        </section>
+      </div>
+
+      <aside class="watch" aria-label="What the server recorded">
+        <section aria-labelledby="audit-h">
+          <h2 id="audit-h">Audit log</h2>
+          <p class="muted small">Every row is a row in the service's <code>audit_events</code> table, newest first. Each action on the left adds to it.</p>
+          <div id="audit" class="scroll" tabindex="0" role="region" aria-label="Audit log table"></div>
+        </section>
+        <section aria-labelledby="wire-h">
+          <h2 id="wire-h">Requests</h2>
+          <p class="muted small">Calls the page made to the in-page service. Passwords are masked here. Nothing leaves your browser.</p>
+          <div id="wire" class="scroll" tabindex="0" role="region" aria-label="Request log"></div>
+        </section>
+      </aside>
+    </div>
+
+    <section class="how" id="how" aria-labelledby="how-h">
+      <h2 id="how-h">How this demo works</h2>
+      <p>GitHub Pages only serves files, so there is no server behind this page. Instead the service runs inside your browser, using the first of three possible approaches: <strong>the real code, run in the browser</strong>.</p>
+      <div class="cols">
+        <div>
+          <h3>What is real</h3>
+          <ul>
+            <li>The <code>authkit</code> Python package, unmodified: the FastAPI routes, SQLAlchemy models, services and security code from the repository.</li>
+            <li>It runs on <a href="https://pyodide.org/">Pyodide</a> (CPython compiled to WebAssembly), self-hosted from this site. No CDN, no network calls after load.</li>
+            <li>Argon2id with the production defaults (<span id="argon">64 MiB, 3 passes, 1 lane</span>) through <code>argon2-cffi</code>. Argon2id does run under WebAssembly, so hashing is not faked.</li>
+            <li>Ed25519-signed access tokens, single-use refresh tokens stored as SHA-256 hashes, reuse detection, TOTP (RFC 6238), recovery codes, throttling and the audit log are the repository's code paths.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What is replaced</h3>
+          <ul>
+            <li>The HTTP server. A <code>fetch</code> call in this page is turned into a direct call of the ASGI app, in a Web Worker.</li>
+            <li>The database file. SQLite runs in memory, and requests are handled one at a time because WebAssembly has no threads. The 8-thread race test in the test suite cannot be reproduced here.</li>
+            <li>The clock. The service reads a clock that you can move forward, to expire access tokens and end lockouts without waiting.</li>
+            <li>The client address, fixed to <code>198.51.100.23</code> (a documentation address). Email goes to an in-memory outbox, not to SMTP.</li>
+            <li>Versions. The demo uses the library builds that Pyodide provides on Python <span id="pyver">3.14</span> (for example SQLAlchemy 2.0.48, not the 2.1.9 in <code>uv.lock</code>). The repository's tests run on Python 3.12.</li>
+            <li>Two helpers are demo-only: the audit and token tables read the database directly, and the authenticator stand-in computes codes with the repository's TOTP functions instead of a phone app.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What is not shown</h3>
+          <ul>
+            <li>Production mode: secure cookies, HSTS and the key file with mode 600.</li>
+            <li>The live breached-password lookup (the bundled 110-entry sample list is used) and real SMTP delivery.</li>
+            <li>The Swagger UI at <code>/docs</code>, key rotation commands and the admin CLI.</li>
+          </ul>
+          <h3>State</h3>
+          <p>Everything lives in this tab's memory. Reload or press Reset demo and it returns to the two seeded accounts. Nothing is stored on a disk or sent anywhere.</p>
+          <h3>Run the real thing</h3>
+          <pre class="code" tabindex="0"><code>git clone https://github.com/Victor-Wambua/authkit.git
+cd authkit
+uv sync
+make seed
+make dev     # http://localhost:8000</code></pre>
+          <p>Needs <a href="https://docs.astral.sh/uv/">uv</a>. The tests are <code>make test</code>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Built by Victor Wambua. MIT licence.
+      <a href="https://github.com/Victor-Wambua/authkit">Source</a> ·
+      <a href="./THIRD-PARTY-NOTICES.txt">Third-party notices</a></p>
+  </footer>
+
+  <p id="announce" class="sr-only" role="status" aria-live="polite"></p>
+  <script type="module" src="./js/main.js"></script>
+  <noscript><p class="failed">This demo needs JavaScript and WebAssembly. The code and README are on GitHub.</p></noscript>
+</body>
+</html>

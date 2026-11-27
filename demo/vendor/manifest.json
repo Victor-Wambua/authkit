@@ -1,0 +1,121 @@
+{
+  "pyodide": "314.0.8",
+  "files": {
+    "annotated_doc-0.0.4-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/annotated_doc-0.0.4-py3-none-any.whl",
+      "sha256": "fe0eb2459fae5e2b67eec182a864ee4e3b7fade3bc8542fc5b87b23f224fa7a4"
+    },
+    "annotated_types-0.7.0-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/annotated_types-0.7.0-py3-none-any.whl",
+      "sha256": "6541523b4b16c1953d2fc9b82fb86c540eea9f78fca329ab371ed13a8b0faa51"
+    },
+    "anyio-4.13.0-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/anyio-4.13.0-py3-none-any.whl",
+      "sha256": "ea08c971f29d33d940864407ceb08601836ac8924d3b4f27db6612ed47faeafc"
+    },
+    "argon2_cffi-23.1.0-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/argon2_cffi-23.1.0-py3-none-any.whl",
+      "sha256": "6dcfd114c94eab7e3feb4af995cc0a62db38972332667da93804b79f2eb28da5"
+    },
+    "argon2_cffi_bindings-25.1.0-cp314-abi3-pyemscripten_2026_0_wasm32.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/argon2_cffi_bindings-25.1.0-cp314-abi3-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "13b8766c50db38a25aed860a5800fd50b16c39c5d1f89a7682170aac6855c07d"
+    },
+    "cffi-2.0.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/cffi-2.0.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "9ae1a61096321cef7248e02293f42d000fa87b73a3e795705a2444290590459d"
+    },
+    "cryptography-47.0.0-cp314-abi3-pyemscripten_2026_0_wasm32.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/cryptography-47.0.0-cp314-abi3-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "0b41491ced2cf85046559cac2502e875492cbef6d332addafa680e41be27f0ad"
+    },
+    "fastapi-0.136.1-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/fastapi-0.136.1-py3-none-any.whl",
+      "sha256": "365df896a8691060b511a0a586d957edc1e90dbc96219c208e79824744cf0b59"
+    },
+    "httpx-0.28.1-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/httpx-0.28.1-py3-none-any.whl",
+      "sha256": "830cb1ec73bb4c46f2e38ebeb3dd50ffb45f62b804dd040519d34fe36f8fdfc7"
+    },
+    "jinja2-3.1.6-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/jinja2-3.1.6-py3-none-any.whl",
+      "sha256": "9330ec9cf2241fb8fc352928ea5e72016bf82de1d3d3b71ffea52a093a3ebab8"
+    },
+    "markupsafe-3.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/markupsafe-3.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "b44c364dc0d19e4210ce68ab77833c2b5d608f78fe6966263add4fc1fa667d97"
+    },
+    "pycparser-3.0-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pycparser-3.0-py3-none-any.whl",
+      "sha256": "0b4cbc12c42e25df55343342fb0da45b189181e4f360602f9721db2016fc3a4b"
+    },
+    "pydantic-2.12.5-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pydantic-2.12.5-py3-none-any.whl",
+      "sha256": "04854875001e07a8a74d87b7c80296cba168773d8c9804e232d695f82484d7d7"
+    },
+    "pydantic_core-2.41.5-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pydantic_core-2.41.5-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "54703fa42a0d4d574283cfb8f08050ba7820c9a42b0a21bc1286407d9a9e54da"
+    },
+    "pydantic_settings-2.16.3-py3-none-any.whl": {
+      "source": "https://files.pythonhosted.org/packages/4c/26/3e68379ca313b6aa58e11fbd8b28d5c6f1b9f4428d70222ba021a76797ec/pydantic_settings-2.16.3-py3-none-any.whl",
+      "sha256": "d1db16a2d34006323a1b42c0640898da58adfbad7ec30baaa9e2b18aafc08999"
+    },
+    "pyjwt-2.15.1-py3-none-any.whl": {
+      "source": "https://files.pythonhosted.org/packages/50/ca/44de4e75f8aadc457f0634be3b542815078ded46dca30efb960edeecad6e/pyjwt-2.15.1-py3-none-any.whl",
+      "sha256": "42d59d631f7768a1028a64c7ff581a9bf7519804daf91fc5b6c56e30eec5e193"
+    },
+    "pyodide-lock.json": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide-lock.json",
+      "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010"
+    },
+    "pyodide.asm.mjs": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.asm.mjs",
+      "sha256": "22514b8be6980e28a02c8b1d6387ce8dfe666fc4edf8d547cff5dce29ff4d972"
+    },
+    "pyodide.asm.wasm": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.asm.wasm",
+      "sha256": "e14d49ceca9b4a0e274ea918f3a898de2d3880b6e5573a6cfe1a2267ecc70329"
+    },
+    "pyodide.mjs": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.mjs",
+      "sha256": "1bb8cc14f9405aaa7cd4e00c12edd0a8539de9cc026618d6ee5a9663f367dc70"
+    },
+    "python_dotenv-1.2.4-py3-none-any.whl": {
+      "source": "https://files.pythonhosted.org/packages/60/d1/38f3a3405989a89ac18390803e70c6ad7c7760da4f9b83cbeca0c44a0c72/python_dotenv-1.2.4-py3-none-any.whl",
+      "sha256": "42269a8a5b3fd54ffa6f3d84b18abed50064717576b4ecf03dc4a55d8aa04fdc"
+    },
+    "python_stdlib.zip": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/python_stdlib.zip",
+      "sha256": "2bd3394a145bfbbe5bbc9d9d6ab9136abbb986c6fef6c142b3a2962227aa5c28"
+    },
+    "segno-1.6.6-py3-none-any.whl": {
+      "source": "https://files.pythonhosted.org/packages/d6/02/12c73fd423eb9577b97fc1924966b929eff7074ae6b2e15dd3d30cb9e4ae/segno-1.6.6-py3-none-any.whl",
+      "sha256": "28c7d081ed0cf935e0411293a465efd4d500704072cdb039778a2ab8736190c7"
+    },
+    "six-1.17.0-py2.py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "228c50f73aa7addf2c2ccf2979c256802a59ab69cad8152b31b9443cc8140f42"
+    },
+    "sniffio-1.3.1-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/sniffio-1.3.1-py3-none-any.whl",
+      "sha256": "1e0f350ca8eac5252c1af9a8d93a7edd70056c1eddf5661f6950688094d1f670"
+    },
+    "sqlalchemy-2.0.48-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/sqlalchemy-2.0.48-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "e12ade7bb0e2746d59fddb40ed0a26caf70d2d3bb483e2e022850939322c5105"
+    },
+    "starlette-1.0.0-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/starlette-1.0.0-py3-none-any.whl",
+      "sha256": "df724767987f398d2c504d1201acdb3aa8c0032f2e50c9815c389863f62d0ce1"
+    },
+    "typing_extensions-4.15.0-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/typing_extensions-4.15.0-py3-none-any.whl",
+      "sha256": "4fec68770a05408e668a4fa53d6bf4f0f684b9dacf820c7c5d6e97d3ad225e29"
+    },
+    "typing_inspection-0.4.2-py3-none-any.whl": {
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/typing_inspection-0.4.2-py3-none-any.whl",
+      "sha256": "deb989630985f7a7296b90357a947a804a7612cecbb6439d6e71128e01f61051"
+    }
+  }
+}

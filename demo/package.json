@@ -1,0 +1,13 @@
+{
+  "name": "authkit-demo",
+  "private": true,
+  "description": "Static in-browser demo of Authkit: build with python3 demo/build.py, test with npm test",
+  "type": "module",
+  "scripts": {
+    "build": "python3 build.py",
+    "test": "node tests/smoke.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
+  }
+}

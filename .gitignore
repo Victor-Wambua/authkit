@@ -12,3 +12,5 @@ dist/
 .env
 data/*
 !data/.gitkeep
+demo/dist/
+demo/node_modules/
