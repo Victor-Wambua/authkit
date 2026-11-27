@@ -51,6 +51,7 @@ export function mountLab(root, app) {
   }
 
   function sayAudit(box, events) {
+    box.querySelector('.audit-line')?.remove();
     if (!events.length) return;
     box.append(h('p.audit-line', {}, 'Audit log gained: ', events.map((e, i) => [i ? ', ' : '', mono(e)])));
   }
